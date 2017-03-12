@@ -91,7 +91,7 @@ class auth_plugin_authhttp extends DokuWiki_Auth_Plugin {
      * @return  bool
      */
     public function checkPass($user, $pass) {
-        return $user == $this->cleanUser($_SERVER['PHP_AUTH_USER']);
+        return $user == $this->cleanUser($_SERVER['OIDC_CLAIM_preferred_username']);
     }
 
     /**
@@ -111,8 +111,8 @@ class auth_plugin_authhttp extends DokuWiki_Auth_Plugin {
     public function getUserData($user, $requireGroups = true) {
         global $conf;
 
-        $info['name'] = $user;
-        $info['mail'] = $user."@".$this->emaildomain;
+        $info['name'] = $_SERVER['OIDC_CLAIM_name'];
+        $info['mail'] = $_SERVER['OIDC_CLAIM_email'];
         $info['grps'] = array($conf['defaultgroup']);
         if (in_array($user, $this->specialusers)) {
             $info['grps'][] = $this->specialgroup;
