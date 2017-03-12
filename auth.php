@@ -91,7 +91,7 @@ class auth_plugin_authhttp extends DokuWiki_Auth_Plugin {
      * @return  bool
      */
     public function checkPass($user, $pass) {
-        return ($user == $this->cleanUser($_SERVER['PHP_AUTH_USER']) && $pass == $_SERVER['PHP_AUTH_PW']);
+        return $user == $this->cleanUser($_SERVER['PHP_AUTH_USER']);
     }
 
     /**
