@@ -38,7 +38,6 @@ $active = (
 );
 
 class auth_plugin_authhttp extends DokuWiki_Auth_Plugin {
-    protected $usernameregex;
     protected $emaildomain;
     protected $specialusers;
     protected $specialgroup;
@@ -55,7 +54,7 @@ class auth_plugin_authhttp extends DokuWiki_Auth_Plugin {
         $this->loadConfig();
 
         /* Set the config values */
-        foreach (array("usernameregex", "emaildomain", "specialusers", "specialgroup") as $cfgvar) {
+        foreach (array("emaildomain", "specialusers", "specialgroup") as $cfgvar) {
             $this->$cfgvar = $this->getConf("$cfgvar");
             if (!$this->$cfgvar) {
                  msg("Config error: \"$cfgvar\" not set!", -1);
@@ -63,9 +62,7 @@ class auth_plugin_authhttp extends DokuWiki_Auth_Plugin {
                  return;
             }
         }
-        if (preg_match('/^\/.*\/$/m', $this->usernameregex) == 0) {
-            $this->usernameregex = '/'.$this->usernameregex.'/';
-        }
+
         $this->specialusers = explode(" ", $this->specialusers);
 
         if ($active) {
@@ -110,26 +107,6 @@ class auth_plugin_authhttp extends DokuWiki_Auth_Plugin {
         }
 
         return $info;
-    }
-
-    /**
-     * Sanitize a given user name
-     *
-     * This function is applied to any user name that is given to
-     * the backend.
-     *
-     * @param  string $user user name
-     * @return string the cleaned user name
-     */
-    public function cleanUser($user) {
-        if (preg_match($this->usernameregex, $user, $results)) {
-            error_log("---");
-            error_log("returning ".$results[0]);
-            error_log("---");
-            return $results[0];
-        } else {
-            return $user;
-        }
     }
 }
 
