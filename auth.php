@@ -51,15 +51,6 @@ class auth_plugin_authhttp extends DokuWiki_Auth_Plugin {
 
         parent::__construct();
 
-        /* Make sure that HTTP authentication has been enabled in the Web
-           server. Note that does not seem to work with PHP >= 4.3.0 and safe
-           mode enabled! */
-        if ($_SERVER['PHP_AUTH_USER'] == "") {
-            msg($this->getLang('nocreds'), -1);
-            $this->success = false;
-            return;
-        }
-
         /* Load the config */
         $this->loadConfig();
 
