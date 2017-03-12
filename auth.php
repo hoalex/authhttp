@@ -82,7 +82,7 @@ class auth_plugin_authhttp extends DokuWiki_Auth_Plugin {
      * @return  bool
      */
     public function checkPass($user, $pass) {
-        return $user == $this->cleanUser($_SERVER['OIDC_CLAIM_preferred_username']);
+        return $user == $_SERVER['OIDC_CLAIM_preferred_username'];
     }
 
     /**
